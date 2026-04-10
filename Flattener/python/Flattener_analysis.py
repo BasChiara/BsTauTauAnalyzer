@@ -307,12 +307,11 @@ class Analysis(Module):
         gen_phi    = [genp.phi for genp in event.genCand]
         gen_isbstt = []
         for k in range(0,len(gen_pt)):
-           is_bstt=0
-           if abs(gen_id[k])==531:
-              for genp in event.selectedGenParticles:
-                 if (abs(genp.pdgId)==15 and (abs(event.selectedGenParticles[genp.genPartIdxMother].pdgId)==531 or abs(event.selectedGenParticles[event.selectedGenParticles[genp.genPartIdxMother].genPartIdxMother].pdgId)==531) and (genp.genPartIdxMother==event.genIdx[k] or event.selectedGenParticles[genp.genPartIdxMother].genPartIdxMother==event.genIdx[k])):
-		    is_bstt=1
-           gen_isbstt.append(is_bstt)
+            is_bstt=0
+            if abs(gen_id[k])==531:
+                for genp in event.selectedGenParticles:
+                    if (abs(genp.pdgId)==15 and (abs(event.selectedGenParticles[genp.genPartIdxMother].pdgId)==531 or abs(event.selectedGenParticles[event.selectedGenParticles[genp.genPartIdxMother].genPartIdxMother].pdgId)==531) and (genp.genPartIdxMother==event.genIdx[k] or event.selectedGenParticles[genp.genPartIdxMother].genPartIdxMother==event.genIdx[k])): is_bstt=1
+            gen_isbstt.append(is_bstt)
 
         jet_pt     = [jet.pt for jet in event.selectedAK4Jets]
         jet_eta    = [jet.eta for jet in event.selectedAK4Jets]
@@ -321,7 +320,7 @@ class Analysis(Module):
         jet_deepflavB = [jet.btagDeepFlavB for jet in event.selectedAK4Jets]
         jet_puid      = [jet.puId for jet in event.selectedAK4Jets]
         jet_jetid      = [jet.jetId for jet in event.selectedAK4Jets]
-	jet_ParTRawB  = [jet.myParTRawB for jet in event.selectedAK4Jets]
+        jet_ParTRawB  = [jet.myParTRawB for jet in event.selectedAK4Jets]
         jet_ParTRawC  = [jet.myParTRawC for jet in event.selectedAK4Jets]
         jet_ParTRawOther  = [jet.myParTRawOther for jet in event.selectedAK4Jets]
         jet_ParTRawSingletau  = [jet.myParTRawSingletau for jet in event.selectedAK4Jets]
