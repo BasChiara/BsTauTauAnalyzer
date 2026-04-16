@@ -5,7 +5,7 @@
 # - SIGNAL -
 /eos/cms/store/cmst3/group/bpark/friti/bstautau/nano_with_part_2025May12/bstautau_106X/ttbarToBsToTauTau_BsFilter_TauTauFilter_TuneCP5_13TeV-pythia8-evtgen/crab_bstautau/250512_******/0000
 # - DY -
-/eos/cms/store/cmst3/group/bpark/friti/bstautau/nano_with_part_2025May12/dy_106X/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/crab_dy/250512_******/0000
-/eos/cms/store/cmst3/group/bpark/friti/bstautau/nano_with_part_2025May12/dy_106X/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/crab_dy/250512_******/0001
-/eos/cms/store/cmst3/group/bpark/friti/bstautau/nano_with_part_2025May12/dyext_106X/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/crab_dyext/250512_******/0000
-/eos/cms/store/cmst3/group/bpark/friti/bstautau/nano_with_part_2025May12/dyext_106X/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/crab_dyext/250512_******/0001
+#/eos/cms/store/cmst3/group/bpark/friti/bstautau/nano_with_part_2025May12/dy_106X/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/crab_dy/250512_******/0000
+#/eos/cms/store/cmst3/group/bpark/friti/bstautau/nano_with_part_2025May12/dy_106X/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/crab_dy/250512_******/0001
+#/eos/cms/store/cmst3/group/bpark/friti/bstautau/nano_with_part_2025May12/dyext_106X/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/crab_dyext/250512_******/0000
+#/eos/cms/store/cmst3/group/bpark/friti/bstautau/nano_with_part_2025May12/dyext_106X/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/crab_dyext/250512_******/0001
