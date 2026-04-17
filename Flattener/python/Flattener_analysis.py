@@ -19,6 +19,8 @@ class Analysis(Module):
 
         cmssw=os.environ['CMSSW_BASE']
 
+        print("is MC?? ",isMC)
+
 	# SFs via correctionlib
 
         ##https://gitlab.cern.ch/cms-nanoAOD/jsonpog-integration/-/tree/master/POG/MUO?ref_type=heads
@@ -116,6 +118,11 @@ class Analysis(Module):
         self.out.branch("GenCand_eta",           "F",  lenVar = "nGenCand");
         self.out.branch("GenCand_phi",           "F",  lenVar = "nGenCand");
         self.out.branch("GenCand_isBsTauTau",            "I",  lenVar = "nGenCand");
+        self.out.branch("GenCand_isBsTauTaunew",            "I",  lenVar = "nGenCand");
+        self.out.branch("GenCand_isBsTauTauh",            "I",  lenVar = "nGenCand");
+        self.out.branch("GenCand_isBsTauTaue",            "I",  lenVar = "nGenCand");
+        self.out.branch("GenCand_isBsTauTaumu",            "I",  lenVar = "nGenCand");
+        self.out.branch("GenCand_isBsTauTaulep",            "I",  lenVar = "nGenCand"); ## both taus are leptons
 
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
@@ -289,7 +296,7 @@ class Analysis(Module):
         event.genIdx=[]
 
         idx=0
-        if self.isMC:
+        if self.isMC:        
             for genp in event.selectedGenParticles:
                 if (abs(genp.pdgId)==531 or abs(genp.pdgId)==15 or abs(genp.pdgId)==13 or abs(genp.pdgId)==11 or abs(genp.pdgId)==6 or abs(genp.pdgId)==24 or abs(genp.pdgId)==23):
                     event.genCand.append(genp)
@@ -305,13 +312,78 @@ class Analysis(Module):
         gen_pt     = [genp.pt for genp in event.genCand]
         gen_eta    = [genp.eta for genp in event.genCand]
         gen_phi    = [genp.phi for genp in event.genCand]
+
+        ## Finding bstautau decay mode
         gen_isbstt = []
+        gen_isbsttnew = []
+        gen_isbstth = []
+        gen_isbstte = []
+        gen_isbsttmu = []
+        gen_isbsttlep = []
+
         for k in range(0,len(gen_pt)):
+
+            '''
             is_bstt=0
             if abs(gen_id[k])==531:
                 for genp in event.selectedGenParticles:
-                    if (abs(genp.pdgId)==15 and (abs(event.selectedGenParticles[genp.genPartIdxMother].pdgId)==531 or abs(event.selectedGenParticles[event.selectedGenParticles[genp.genPartIdxMother].genPartIdxMother].pdgId)==531) and (genp.genPartIdxMother==event.genIdx[k] or event.selectedGenParticles[genp.genPartIdxMother].genPartIdxMother==event.genIdx[k])): is_bstt=1
+                    if (abs(genp.pdgId)==15 and (abs(event.selectedGenParticles[genp.genPartIdxMother].pdgId)==531 or abs(event.selectedGenParticles[event.selectedGenParticles[genp.genPartIdxMother].genPartIdxMother].pdgId)==531) and (genp.genPartIdxMother==event.genIdx[k] or event.selectedGenParticles[genp.genPartIdxMother].genPartIdxMother==event.genIdx[k])):
+		        is_bstt=1
+            print("OLD is gen_isbstt ",k,gen_id[k],is_bstt)
+
             gen_isbstt.append(is_bstt)
+            print(gen_isbstt)
+            '''
+            is_bstt = 0
+            is_bsttnew = 0
+            is_bstth = 0
+            is_bsttmu = 0
+            is_bstte = 0
+            is_bsttlep = 0
+            taus_from_this_bs = []
+            if abs(gen_id[k])==531: 
+
+                # find taus whose mother or grandmother is the Bs
+                ## selectedgenparticles are all the genparticles it seems
+                for tau_idx,genp in enumerate(event.selectedGenParticles):
+                    if (abs(genp.pdgId)==15 and (abs(event.selectedGenParticles[genp.genPartIdxMother].pdgId)==531 or abs(event.selectedGenParticles[event.selectedGenParticles[genp.genPartIdxMother].genPartIdxMother].pdgId)==531) and (genp.genPartIdxMother==event.genIdx[k] or event.selectedGenParticles[genp.genPartIdxMother].genPartIdxMother==event.genIdx[k])):
+                        taus_from_this_bs.append((tau_idx, genp))
+                        is_bstt=1
+
+            ## keep same definition as cecile
+            gen_isbstt.append(is_bstt)
+            print("New is gen_isbstt ",k,gen_id[k],gen_isbstt)
+            # Classify decay if exactly 2 taus were found
+            #if len(taus_from_this_bs) != 2: print("CIAOOOO ERRORE QUIII")
+            if len(taus_from_this_bs) == 2:
+                ## new inclusive definition (bs-> tautau)
+                is_bsttnew = 1
+
+                decay_modes = []
+                for tau_idx,tau in taus_from_this_bs:
+                    daughters = [d for d in event.selectedGenParticles if d.genPartIdxMother == tau_idx]
+                    if any(abs(d.pdgId) == 11 for d in daughters):
+                        decay_modes.append("e")
+                    elif any(abs(d.pdgId) == 13 for d in daughters):
+                        decay_modes.append("mu")
+                    else:
+                        decay_modes.append("had")
+
+                if decay_modes.count("had") == 2:
+                    is_bstth = 1
+                elif decay_modes.count("had") == 1 and decay_modes.count("e") == 1:
+                    is_bstte = 1
+                elif decay_modes.count("had") == 1 and decay_modes.count("mu") == 1:
+                    is_bsttmu = 1
+                elif ("e" in decay_modes or "mu" in decay_modes) and decay_modes.count("had") == 0:
+                    is_bsttlep = 1
+
+
+            gen_isbsttnew.append(is_bsttnew)
+            gen_isbstth.append(is_bstth)
+            gen_isbstte.append(is_bstte)
+            gen_isbsttmu.append(is_bsttmu)
+            gen_isbsttlep.append(is_bsttlep)
 
         jet_pt     = [jet.pt for jet in event.selectedAK4Jets]
         jet_eta    = [jet.eta for jet in event.selectedAK4Jets]
@@ -422,6 +494,11 @@ class Analysis(Module):
             self.out.fillBranch("GenCand_eta" ,       gen_eta)
             self.out.fillBranch("GenCand_phi" ,       gen_phi)
             self.out.fillBranch("GenCand_isBsTauTau" ,        gen_isbstt)
+            self.out.fillBranch("GenCand_isBsTauTaunew" ,        gen_isbsttnew)
+            self.out.fillBranch("GenCand_isBsTauTauh",         gen_isbstth)
+            self.out.fillBranch("GenCand_isBsTauTaue",         gen_isbstte)
+            self.out.fillBranch("GenCand_isBsTauTaumu",        gen_isbsttmu)
+            self.out.fillBranch("GenCand_isBsTauTaulep",       gen_isbsttlep) ## both taus are leptons
 
         return True
 
