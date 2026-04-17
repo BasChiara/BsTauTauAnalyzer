@@ -2,6 +2,7 @@
 import os
 import sys
 import optparse
+from fnmatch import fnmatch
 import shutil
 import random
 import glob
@@ -114,6 +115,7 @@ def split_input(opt, FarmDirectory):
   # -- loop on datasets --
   for dataset in datasets:
     if "#" in dataset or len(dataset)<2: continue
+    if not fnmatch(dataset, opt.filter) : continue
     log.print_info('Processing %s'%(dataset))
     
     sufix=''
@@ -205,7 +207,8 @@ def main():
     #configuration
     usage = 'usage: %prog [options]'
     parser = optparse.OptionParser(usage)
-    parser.add_option('-i', '--in',         dest='input',     help='list of input datasets',    default='listSamplesMC2018.txt', type='string')
+    parser.add_option('-i', '--input',      dest='input',     help='list of input datasets',    default='listSamplesMC2018.txt', type='string')
+    parser.add_option('--filter',     dest='filter',    help='(optional) string to filter input datasets. POSIX regular expression allowed',    default='*', type='string')
     parser.add_option('--isdata',           dest='isdata',    help='flag to run on data (apply GRL and specific trigger selection)', action='store_true')
     parser.add_option('-y', '--year',       dest='year',      help='data-taking year to process',    default='2018', type='string')
     parser.add_option('-t', '--tag',        dest='tag',       help='tag for your task | not affecting the output ntuple structure', default='')
