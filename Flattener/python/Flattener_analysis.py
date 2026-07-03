@@ -352,7 +352,7 @@ class Analysis(Module):
 
             ## keep same definition as cecile
             gen_isbstt.append(is_bstt)
-            print("New is gen_isbstt ",k,gen_id[k],gen_isbstt)
+            #print("New is gen_isbstt ",k,gen_id[k],gen_isbstt)
             # Classify decay if exactly 2 taus were found
             #if len(taus_from_this_bs) != 2: print("CIAOOOO ERRORE QUIII")
             if len(taus_from_this_bs) == 2:

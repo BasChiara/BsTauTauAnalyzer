@@ -28,7 +28,7 @@ keep HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8
 
 keep Pileup_nTrueInt*
 keep genWeight*
-keep fixedGridRhoFastjetAll
+keep Rho_fixedGridRhoFastjet*
 keep Generator*
 keep btagWeight_DeepCSVB*
 keep LHE_Vpt*

@@ -66,10 +66,10 @@ ANALYSISTRIGGERDATA = {
 }
 
 
-ANALYSISCHANNELCUT = {
+ANALYSISCHANNELCUT = { # no spaces!
     'e'     :'(nElectron>0)',
     'mu'    :'(nMuon>0)',
-    'emu'   :'(nMuon>0 && nElectron>0)',
+    'emu'   :'(nMuon>0&&nElectron>0)',
     'ee'    :'(nElectron>1)',
     'mumu'  :'(nMuon>1)'
 }
@@ -98,13 +98,13 @@ ANALYSISCUT['mc']={}
 for y in ANALYSISTRIGGERMC:
     ANALYSISCUT['mc'][y]={}
     for c in ANALYSISTRIGGERMC[y]:
-        ANALYSISCUT['mc'][y][c]='--cut %s&&%s'%(ANALYSISTRIGGERMC[y][c],ANALYSISCHANNELCUT[c]) # for MC (no json applied)
+        ANALYSISCUT['mc'][y][c]="--cut %s&&%s"%(ANALYSISTRIGGERMC[y][c],ANALYSISCHANNELCUT[c]) # for MC (no json applied)
 # -- DATA --
 ANALYSISCUT['data']={}
 for y in ANALYSISTRIGGERDATA:
     ANALYSISCUT['data'][y]={}
     for c in ANALYSISTRIGGERDATA[y]:
-        ANALYSISCUT['data'][y][c]='--cut %s&&%s --json %s'%(ANALYSISTRIGGERDATA[y][c],ANALYSISCHANNELCUT[c],cmssw+'/src/BsTauTauAnalyzer/Flattener/data/'+ANALYSISGRL[y]) # for data (json applied)
+        ANALYSISCUT['data'][y][c]="--cut %s&&%s --json %s"%(ANALYSISTRIGGERDATA[y][c],ANALYSISCHANNELCUT[c],cmssw+'/src/BsTauTauAnalyzer/Flattener/data/'+ANALYSISGRL[y]) # for data (json applied)
 
 ## Uncomment the following lines if running on data, comment if running on MC
 #for y in ANALYSISTRIGGERDATA:
