@@ -19,7 +19,7 @@ scram b -j 8
 Example for a ttbar MC file in the emu final state. The trigger list can be left empty. Change the last word to run other final states, or to run over data (e.g. "emudata2018" instead of "emumc2018").
 
 ```
-python3 $CMSSW_BASE/src/PhysicsTools/NanoAODTools/scripts/nano_postproc.py output root://cms-xrd-global.cern.ch//store/mc/RunIII2024Summer24NanoAODv15/TTto2L2Nu_TuneCP5CR2_13p6TeV_powheg-pythia8/NANOAODSIM/150X_mcRun3_2024_realistic_v2-v2/2520000/067bfe45-b4a0-45e9-8309-f478e218aaf0.root --bi $CMSSW_BASE/src/BsTauTauAnalyzer/Flattener/scripts/keep_in.txt --bo $CMSSW_BASE/src/BsTauTauAnalyzer/Flattener/scripts/keep_out.txt -c "1" -I BsTauTauAnalyzer.Flattener.Flattener_analysis analysis_emumc2024 -N 1000
+python3 $CMSSW_BASE/src/PhysicsTools/NanoAODTools/scripts/nano_postproc.py output /eos/cms/store/group/phys_bphys/cbasile/BsTauTau-ttbar/nanov15_UParTditau/crabjobs_2026Jul11/ttbarToBsToTauTau_BsFilter_TauTauFilter_TuneCP5_13TeV-pythia8-evtgen/ttbarToBsToTauTau_RunIIUL18_nanoAODv15_v1/260710_222737/0000/step_nanoAODv15_10.root --bi $CMSSW_BASE/src/BsTauTauAnalyzer/Flattener/scripts/keep_in.txt --bo $CMSSW_BASE/src/BsTauTauAnalyzer/Flattener/scripts/keep_out.txt -c "(nMuon>0&&nElectron>0&&nJet>0)" -I BsTauTauAnalyzer.Flattener.Flattener_analysis analysis_emumc2018 -N 1000
 ```
 
 ## Submit jobs via condor
